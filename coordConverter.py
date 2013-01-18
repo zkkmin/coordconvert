@@ -4,7 +4,7 @@
      'http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer/project'
      service for conversion.
 
-    Input file must be a cvs file with 2 columns heading X and Y or Lat and Lng.
+    Input file must be a csv file with 2 columns heading X and Y or Lat and Lng.
     The output file will contain original two columns and two result columns.
     To convert WGS to SVY, use WGS2SVY as third argument.
     To convert SVY to WGS, use SVY2WGS as third argument.
@@ -16,8 +16,12 @@ import csv
 from sys import argv
 import sys
 
-sys.path.append("C:\\Python25\\Lib\\site-packages\\simplejson-3.0.7-py2.5.egg")
-import simplejson as json
+# If python version is 2.5, install simplejson module and modified the module path in sys.path.apped()
+if sys.version_info[:2][1] > 5:
+    import json
+else:
+    sys.path.append("C:\\Python25\\Lib\\site-packages\\simplejson-3.0.7-py2.5.egg")
+    import simplejson as json
 
 if len(argv) < 4:
     print ("Input Error.")
@@ -38,8 +42,7 @@ else:
     csvWriter = csv.writer( outfile )
     
     csvWriter.writerow( ["X", "Y", "Lat", "Lng"] )
-    random.seed()
-
+    
     url = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer/project?"
     inSR = ""
     outSR = ""
